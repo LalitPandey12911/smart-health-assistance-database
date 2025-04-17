@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Probability Chart | Smart Health Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="compact-header">
+        <div class="nav-header-combo container">
+            <h1>Smart Health Assistant</h1>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/download_pdf">Download Report</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="result-section fade-in-up">
+            <div class="result-card">
+                {% if disease_probs %}
+                <div class="result-detail">
+                    <h2 class="chart-title">Disease Probability Visualization</h2>
+                    <div class="chart-container">
+                        <canvas id="probabilityChart"></canvas>
+                    </div>
+                </div>
+                {% else %}
+                <p class="no-data-text">No probability data available. Please try again.</p>
+                {% endif %}
+            </div>
+        </section>
+
+        <div class="navigation-buttons fade-in-up">
+            <a href="/result" class="btn back-to-results-btn">Back to Prediction Results</a>
+            <a href="/" class="btn back-to-home-btn">Back to Home</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 Smart Health Assistant. All rights reserved.</p>
+            <p>
+                <a href="/contact" class="footer-link">Contact Us</a> |
+                <a href="/privacy-policy" class="footer-link">Privacy Policy</a>
+            </p>
+        </div>
+    </footer>
+
+    {% if disease_probs %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('probabilityChart').getContext('2d');
+        const labels = {{ disease_probs.keys() | list | tojson }};
+        const data = {{ disease_probs.values() | list | tojson }};
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Probability',
+                    data: data,
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(75, 192, 192, 0.6)'
+                    ],
+                    borderColor: 'rgba(0, 0, 0, 0.1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 1,
+                        ticks: {
+                            callback: value => (value * 100).toFixed(0) + '%'
+                        }
+                    }
+                },
+                animation: {
+                    duration: 800,
+                    easing: 'easeInOutQuad'
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
+    {% endif %}
+
+</body>
+
+</html>

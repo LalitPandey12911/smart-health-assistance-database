@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Health Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Updated Navigation Bar -->
+    <header class="compact-header">
+        <div class="nav-header-combo container">
+            <h1>Smart Health Assistant</h1>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/blog">Blog</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Loading spinner -->
+    <div id="loader" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="container">
+        <section class="form-section fade-in-up">
+            <form action="/predict" method="POST" class="health-form" id="health-form">
+                <h2>Enter Your Details</h2>
+
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" name="location" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="symptoms">Symptoms (comma separated):</label>
+                    <input type="text" id="symptoms" name="symptoms" placeholder="e.g. headache, fatigue, fever" required>
+                </div>
+
+                <p id="symptom-error" class="error-message" style="display:none; color: red;">Please enter at least 3 symptoms.</p>
+
+                <button type="submit" class="btn">Predict Disease</button>
+            </form>
+        </section>
+
+        {% if predicted_disease %}
+        <section class="result-section fade-in-up">
+            <div class="result-card">
+                <h2>Prediction Results</h2>
+                <div class="result-card-body">
+                    <p><strong>Disease:</strong> {{ predicted_disease }}</p>
+                    <p><strong>Description:</strong> {{ dis_des }}</p>
+                </div>
+
+                <div class="result-details">
+                    <div class="result-detail">
+                        <h3>Precautions:</h3>
+                        <ul>
+                            {% for item in my_precautions %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="result-detail">
+                        <h3>Medications:</h3>
+                        <ul>
+                            {% for item in medications %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="result-detail">
+                        <h3>Diet Recommendations:</h3>
+                        <ul>
+                            {% for item in my_diet %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="result-detail">
+                        <h3>Workouts:</h3>
+                        <ul>
+                            {% for item in workout %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <p><strong>Model Used:</strong> {{ model_used }}</p>
+            </div>
+        </section>
+        {% elif message %}
+        <p class="error-message">{{ message }}</p>
+        {% endif %}
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Smart Health Assistant. All rights reserved.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+
+</html>

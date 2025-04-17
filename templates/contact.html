@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us | Smart Health Assistant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="compact-header">
+        <div class="nav-header-combo container">
+            <h1>Smart Health Assistant</h1>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/blog">Blog</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="fade-in-up">
+            <div class="result-card">
+                <h2>Contact Us</h2>
+                <p>If you have any questions, feedback, or suggestions, feel free to reach out to us using the form below.</p>
+
+                <form class="contact-form" method="post" action="/contact">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 Smart Health Assistant. All rights reserved.</p>
+            <p><a href="/contact" class="footer-link">Contact Us</a> | <a href="/privacy-policy" class="footer-link">Privacy Policy</a></p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

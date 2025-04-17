@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results | Smart Health Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="compact-header">
+        <div class="nav-header-combo container">
+            <h1>Smart Health Assistant</h1>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/download_pdf">Download Report</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="result-section fade-in-up">
+            <div class="result-card">
+                <h2>Prediction Results</h2>
+
+                <div class="result-card-body">
+                    <p><strong>Disease:</strong> {{ predicted_disease }}</p>
+                    <p><strong>Description:</strong> {{ dis_des }}</p>
+                </div>
+
+                <div class="result-details">
+                    <div class="result-detail">
+                        <h3>
+                            <img src="{{ url_for('static', filename='images/precaution-icon.png') }}" class="icon">
+                            Precautions:
+                        </h3>
+                        <ul>
+                            {% for item in my_precautions %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="result-detail">
+                        <h3>
+                            <img src="{{ url_for('static', filename='images/medication-icon.png') }}" class="icon">
+                            Medications:
+                        </h3>
+                        <ul>
+                            {% for item in medications %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="result-detail">
+                        <h3>
+                            <img src="{{ url_for('static', filename='images/diet-icon.png') }}" class="icon">
+                            Diet Recommendations:
+                        </h3>
+                        <ul>
+                            {% for item in my_diet %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="result-detail">
+                        <h3>
+                            <img src="{{ url_for('static', filename='images/workout-icon.png') }}" class="icon">
+                            Workouts:
+                        </h3>
+                        <ul>
+                            {% for item in workout %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <p><strong>Model Used:</strong> {{ model_used }}</p>
+
+                <br>
+
+                {% if disease_probs %}
+                <a href="/probability_chart" style="text-decoration: none;">
+                    <button class="btn">View Disease Probability Chart</button>
+                </a>
+                {% endif %}
+
+            </div>
+        </section>
+
+        <section class="health-tips fade-in-up">
+            <h3>Health Tip of the Day</h3>
+            <p>Remember, staying hydrated is crucial for your health! Drink at least 8 glasses of water a day.</p>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 Smart Health Assistant. All rights reserved.</p>
+            <p><a href="/contact" class="footer-link">Contact Us</a> | <a href="/privacy-policy" class="footer-link">Privacy Policy</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>
