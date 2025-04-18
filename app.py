@@ -10,15 +10,12 @@ from textblob import TextBlob
 import logging
 from sklearn.metrics import accuracy_score
 
-# Setup Flask and logging
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 
-# Directories
 MODEL_DIR = 'models'
 DATA_DIR = 'data'
 
-# Globals
 last_prediction_data = {}
 last_disease_probs = {}
 
@@ -31,9 +28,9 @@ def safe_load_csv(filename):
 
 def load_models():
     return {
-        "svc": pickle.load(open(os.path.join(MODEL_DIR, "svc.pkl"), "rb")),
-        "rf": pickle.load(open(os.path.join(MODEL_DIR, "rf.pkl"), "rb")),
-        "label_encoder": pickle.load(open(os.path.join(MODEL_DIR, "label_encoder.pkl"), "rb"))
+        "rf": pickle.load(open(os.path.join(MODEL_DIR, "rf (1).pkl"), "rb")),
+        "xgb": pickle.load(open(os.path.join(MODEL_DIR, "xgb.pkl"), "rb")),
+        "label_encoder": pickle.load(open(os.path.join(MODEL_DIR, "label_encoder (1).pkl"), "rb"))
     }
 
 def load_data():
@@ -47,7 +44,6 @@ def load_data():
         "training": safe_load_csv("Training.csv")
     }
 
-    # Strip whitespace from 'Disease' column in all DataFrames
     for key in data:
         if 'Disease' in data[key].columns:
             data[key]['Disease'] = data[key]['Disease'].str.strip()
@@ -59,7 +55,6 @@ data = load_data()
 training_data = data["training"]
 all_symptoms = training_data.columns[:-1].tolist()
 
-# === Core Logic ===
 def correct_symptom(symptom):
     return str(TextBlob(symptom).correct()).lower()
 
@@ -80,23 +75,22 @@ def predict_disease(symptoms_list):
 
     df_input = pd.DataFrame([input_vector], columns=all_symptoms)
 
-    svc_pred = models['svc'].predict(df_input)[0]
     rf_pred = models['rf'].predict(df_input)[0]
+    xgb_pred = models['xgb'].predict(df_input)[0]
 
     label_encoder = models['label_encoder']
-    svc_pred_label = label_encoder.inverse_transform([svc_pred])[0]
     rf_pred_label = label_encoder.inverse_transform([rf_pred])[0]
+    xgb_pred_label = label_encoder.inverse_transform([xgb_pred])[0]
 
-    # Convert prognosis column if it's not already encoded
     y_true = label_encoder.transform(training_data['prognosis'])
 
-    svc_acc = accuracy_score(y_true, models['svc'].predict(training_data[all_symptoms]))
     rf_acc = accuracy_score(y_true, models['rf'].predict(training_data[all_symptoms]))
+    xgb_acc = accuracy_score(y_true, models['xgb'].predict(training_data[all_symptoms]))
 
-    selected_model = 'rf' if rf_acc > svc_acc else 'svc'
-    selected_pred = rf_pred if selected_model == 'rf' else svc_pred
+    selected_model = 'xgb' if xgb_acc > rf_acc else 'rf'
+    selected_pred = xgb_pred if selected_model == 'xgb' else rf_pred
     predicted_disease = label_encoder.inverse_transform([selected_pred])[0]
-    model_used = "Random Forest" if selected_model == 'rf' else "SVC"
+    model_used = "XGBoost" if selected_model == 'xgb' else "Random Forest"
 
     rf_probs = models['rf'].predict_proba(df_input)[0]
     top_probs = dict(sorted(zip(models['rf'].classes_, rf_probs), key=lambda x: x[1], reverse=True)[:4])
@@ -108,8 +102,7 @@ def predict_disease(symptoms_list):
     return predicted_disease, model_used, decoded_probs
 
 def get_disease_info(disease):
-    disease = disease.strip()  # Clean incoming disease string
-
+    disease = disease.strip()
     desc = data['description'].set_index('Disease').loc[disease, 'Description']
     pre = data['precautions'][data['precautions']['Disease'] == disease].iloc[0, 1:].dropna().tolist()
     med = data['medications'][data['medications']['Disease'] == disease]['Medication'].tolist()
@@ -117,7 +110,6 @@ def get_disease_info(disease):
     workout = data['workout'][data['workout']['disease'] == disease]['workout'].tolist()
     return desc, pre, med, diet, workout
 
-# === Flask Routes ===
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -162,7 +154,6 @@ def predict():
 def result():
     if not last_prediction_data:
         return "No prediction data available.", 400
-    logging.info(f"Prediction data: {last_prediction_data}")
     return render_template('results.html',
                            predicted_disease=last_prediction_data["Disease"],
                            dis_des=last_prediction_data["Description"],
@@ -177,7 +168,6 @@ def result():
 def probability_chart():
     if not last_disease_probs:
         return "No probability data to display.", 400
-    logging.info(f"Disease probabilities: {last_disease_probs}")
     return render_template('probability_chart.html', disease_probs=last_disease_probs)
 
 @app.route('/download_pdf')
@@ -238,8 +228,7 @@ def privacy_policy():
 def developer():
     return render_template('developer.html')
 
-
 if __name__ == '__main__':
     import os
-    port = int(os.environ.get('PORT', 5000))  
+    port = int(os.environ.get('PORT', 5000))
     app.run(debug=False, host='0.0.0.0', port=port)
