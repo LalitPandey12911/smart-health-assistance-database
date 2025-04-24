@@ -7,18 +7,29 @@
     <title>Disease Probability Chart | Smart Health Assistant</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+      }
+    </style>
 </head>
 
 <body>
 
     <header class="compact-header">
         <div class="nav-header-combo container">
-            <h1>Smart Health Assistant</h1>
+            <h1 class="site-title typing-header">Smart Health Assistant</h1>
             <ul class="nav-links">
-                <li><a href="/">Home</a></li>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
                 <li><a href="/about">About</a></li>
-                <li><a href="/blog">Blog</a></li>
-                <li><a href="/download_pdf">Download Report</a></li>
+                <li><a href="/download_pdf" target="_blank">Download Report</a></li>
+                <li><a href="{{ url_for('logout') }}" class="logout-link">Logout</a></li>
             </ul>
         </div>
     </header>

@@ -13,17 +13,30 @@
 
     <header class="compact-header">
         <div class="nav-header-combo container">
-            <h1>Smart Health Assistant</h1>
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/blog">Blog</a></li>
-                <li><a href="/download_pdf">Download Report</a></li>
-            </ul>
+            <h1 class="site-title typing-header">Smart Health Assistant</h1>
+            <div class="nav-links-outer">
+                <ul class="nav-links">
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/download_pdf" target="_blank">Download Report</a></li>
+                    <li><a href="{{ url_for('logout') }}" class="logout-link">Logout</a></li>
+                </ul>
+            </div>
         </div>
     </header>
+    <style>
+        footer {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 1rem;
+          background-color: #333;
+          color: #fff;
+          text-align: center;
+        }
+        </style>
 
-    <div class="container">
+    <main class="container">
         <section class="result-section fade-in-up">
             <div class="result-card">
                 <h2>Prediction Results</h2>
@@ -36,7 +49,7 @@
                 <div class="result-details">
                     <div class="result-detail">
                         <h3>
-                            <img src="{{ url_for('static', filename='images/precaution-icon.png') }}" class="icon">
+                            <img src="{{ url_for('static', filename='images/precaution-icon.png') }}" class="icon" alt="Precautions Icon">
                             Precautions:
                         </h3>
                         <ul>
@@ -48,7 +61,7 @@
 
                     <div class="result-detail">
                         <h3>
-                            <img src="{{ url_for('static', filename='images/medication-icon.png') }}" class="icon">
+                            <img src="{{ url_for('static', filename='images/medication-icon.png') }}" class="icon" alt="Medications Icon">
                             Medications:
                         </h3>
                         <ul>
@@ -60,7 +73,7 @@
 
                     <div class="result-detail">
                         <h3>
-                            <img src="{{ url_for('static', filename='images/diet-icon.png') }}" class="icon">
+                            <img src="{{ url_for('static', filename='images/diet-icon.png') }}" class="icon" alt="Diet Icon">
                             Diet Recommendations:
                         </h3>
                         <ul>
@@ -72,7 +85,7 @@
 
                     <div class="result-detail">
                         <h3>
-                            <img src="{{ url_for('static', filename='images/workout-icon.png') }}" class="icon">
+                            <img src="{{ url_for('static', filename='images/workout-icon.png') }}" class="icon" alt="Workout Icon">
                             Workouts:
                         </h3>
                         <ul>
@@ -85,14 +98,11 @@
 
                 <p><strong>Model Used:</strong> {{ model_used }}</p>
 
-                <br>
-
                 {% if disease_probs %}
-                <a href="/probability_chart" style="text-decoration: none;">
-                    <button class="btn">View Disease Probability Chart</button>
-                </a>
+                <div class="btn-container">
+                    <a href="/probability_chart" class="probability-chart-button">View Disease Probability Chart</a>
+                </div>
                 {% endif %}
-
             </div>
         </section>
 
@@ -100,12 +110,15 @@
             <h3>Health Tip of the Day</h3>
             <p>Remember, staying hydrated is crucial for your health! Drink at least 8 glasses of water a day.</p>
         </section>
-    </div>
+    </main>
 
     <footer>
         <div class="footer-container">
             <p>&copy; 2025 Smart Health Assistant. All rights reserved.</p>
-            <p><a href="/contact" class="footer-link">Contact Us</a> | <a href="/privacy-policy" class="footer-link">Privacy Policy</a></p>
+            <p>
+                <a href="/contact" class="footer-link">Contact Us</a> |
+                <a href="/privacy-policy" class="footer-link">Privacy Policy</a>
+            </p>
         </div>
     </footer>
 

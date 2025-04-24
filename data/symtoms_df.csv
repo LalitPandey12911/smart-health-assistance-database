@@ -4919,3 +4919,38 @@
 4917,Urinary tract infection, burning_micturition, bladder_discomfort, foul_smell_of urine, continuous_feel_of_urine
 4918,Psoriasis, skin_rash, joint_pain, skin_peeling, silver_like_dusting
 4919,Impetigo, skin_rash, high_fever, blister, red_sore_around_nose
+4920,Comman Cold,Runny Nose,Sneezing,Sore Throat,Cough
+4921,Covid-19,Fever,Cough,Shortness of Breath,Loss of Taste or Smell
+4922,Tuberculosis,Blood in Sputum,Fatigue,Weight Loss,Night Sweats
+4923,Tuberculosis,Blood in Sputum,Fatigue,Weight Loss,Persistent Cough
+4924,Asthma,Shortness of Breath, Wheezing,Chest Tightness,Cough
+4925,Asthma,Shortness of Breath, Wheezing,Chest Tightness,Fatigue
+4926,Diabetes,Excessive Thirst,Frequent Urination,Fatigue,Blurred Vision
+4927,Diabetes,Excessive Thirst,Frequent Urination,Fatigue,Unexplainde Weight Loss
+4928,Hypertension,headache,Shortness of Breadth,Dizziness,chest_pain
+4929,Hypertension,headache,Shortness of Breadth,Dizziness,Fatigue
+4930,Gastritis,stomach_pain,Bloating,Nausea,vomiting
+4931,Gastritis,stomach_pain,Bloating,loss_of_appetite,vomiting
+4932,Allergies,Sneezing,Runny_nose,itching_eyes,cough
+4933,Allergies,Sneezing,Runny_nose,itching_eyes,Fatigue
+4934,Osteoarthristis,joint_pain,Stiffness,Swelling,Decreased_mobliliy
+4935,Osteoarthristis,joint_pain,Stiffness,Swelling,Tightness
+4936,Migraine,severe_headache,sensitivity_to_light,nausea,vomiting
+4937,Migraine,severe_headache,sensitivity_to_light,nausea,aura
+4938,Pneumonia,cough,shortness_of_breath,chest_pain,Fever
+4939,Pneumonia,cough,shortness_of_breath,chest_pain,fatigue
+4940,Peptic Ulcer,stomach_pain,nausea,bloating,loss_of_appetite
+4941,Peptic Ulcer,stomach_pain,nausea,bloating,indigestion
+4942,kidney stone,severe_back_pain,blood_in_urine,painful_urination,Nausea
+4943,kidney stone,severe_back_pain,blood_in_urine,painful_urination,vomiting
+4944,Dengue,fever,headache,body_pain,nausea
+4945,Dengue,fever,headache,body_pain,skin_rash
+4946,influenza,fever,headache,body_pain,cough
+4947,influenza,fever,headache,body_pain,sore_throat
+4948,Viral Fever,fever,headache,body_pain,fatigue
+4949,Viral Fever,fever,headache,body_pain,fatigue
+4950,Viral Fever,fever,headache,body_pain,fatigue
+4951,Viral Fever,fever,headache,body_pain,fatigue
+4952,Viral Fever,Headache,body_pain,chills
+4953,Viral Fever,Headache,body_pain,chills
+4954,Viral Fever,Headache,body_pain,chills

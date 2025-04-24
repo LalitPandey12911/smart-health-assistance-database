@@ -7,18 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Any specific styles for this page can go here */
+    </style>
 </head>
 
 <body>
 
     <header class="compact-header">
         <div class="nav-header-combo container">
-            <h1>Smart Health Assistant</h1>
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/blog">Blog</a></li>
-            </ul>
+            <h1>Smart Health Assistant </h1>
         </div>
     </header>
 
@@ -28,7 +26,17 @@
                 <h2>Contact Us</h2>
                 <p>If you have any questions, feedback, or suggestions, feel free to reach out to us using the form below.</p>
 
-                <form class="contact-form" method="post" action="/contact">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <ul class="flash-messages">
+                            {% for category, message in messages %}
+                                <li class="flash {{ category }}">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
+
+                <form class="contact-form" method="POST" action="{{ url_for('contact') }}">
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" required>
 
@@ -42,6 +50,10 @@
                 </form>
             </div>
         </section>
+
+        <div class="navigation-buttons fade-in-up">
+            <a href="#" onclick="window.history.back(); return false;" class="btn">Go Back</a>
+        </div>
     </div>
 
     <footer>
