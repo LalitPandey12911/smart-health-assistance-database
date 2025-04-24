@@ -289,6 +289,9 @@ def privacy_policy():
     return render_template('privacy-policy.html')
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    app.run(debug=True)
+    # Dynamically set the port from the environment or default to 5000
+    port = int(os.environ.get('PORT', 5000))
+    
+    # Run the app on host '0.0.0.0' (to be accessible externally), with dynamic port
+    app.run(debug=False, host='0.0.0.0', port=port)
+
