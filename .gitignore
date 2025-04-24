@@ -1,5 +1,11 @@
+# Ignore virtual environment
 venv/
-*.pyc
+# Ignore Python bytecode files
 __pycache__/
-*.pkl
+*.pyc
+*.pyo
+# Ignore IDE and OS-specific files
+.vscode/
+.idea/
+*.swp
 .DS_Store
